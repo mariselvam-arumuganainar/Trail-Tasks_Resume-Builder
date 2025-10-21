@@ -80,10 +80,10 @@ export default function Header() {
             </div>
             <div>
               <h1 className="text-xl font-bold gradient-text">
-                Resume Builder Pro
+                Resume Builder Mariselvam
               </h1>
               <p className="text-xs text-slate-600 dark:text-slate-400">
-                Career Ecosystem Platform
+                Trail Task Career Ecosystem Platform
               </p>
             </div>
           </div>

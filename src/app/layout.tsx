@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: "Resume Builder - Premium Career Ecosystem",
+  title: "Resume Builder - Mariselvam A",
   description: "Next-generation resume builder with real-time verification",
 };
 

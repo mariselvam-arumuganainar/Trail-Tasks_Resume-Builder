@@ -25,21 +25,21 @@ interface ResumeStore {
 const initialResumeData: ResumeData = {
   template: 'modern',
   personalInfo: {
-    fullName: 'John Doe',
-    email: 'john.doe@example.com',
+    fullName: 'Mari Selvam',
+    email: 'avmariselvambiz@gmail.com',
     phone: '+1 (555) 123-4567',
-    location: 'San Francisco, CA',
-    portfolio: 'https://johndoe.com',
-    linkedin: 'linkedin.com/in/johndoe',
-    github: 'github.com/johndoe',
+    location: 'Tuticorin, India',
+    portfolio: 'https://mariselvm.com',
+    linkedin: 'linkedin.com/in/mariselvam-a',
+    github: 'github.com/mariselvam-arumuganainar',
   },
-  summary: 'Passionate full-stack developer with 5+ years of experience building scalable web applications.',
+  summary: 'Passionate full-stack developer with 2+ years of experience building scalable web applications.',
   experience: [
     {
       id: '1',
       company: 'Tech Corp',
       position: 'Senior Full Stack Developer',
-      startDate: '2021-01',
+      startDate: '2023-02',
       endDate: '2024-10',
       current: true,
       description: [
