@@ -1,26 +1,514 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-slate-700 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400 dark:bg-slate-600;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent;
+}
+/* Editable hover effects */
+[contenteditable="true"]:hover {
+  background-color: rgba(99, 102, 241, 0.05);
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+}
+
+[contenteditable="true"]:focus {
+  outline: none;
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+/* Smooth transitions for editable elements */
+[contenteditable="true"] {
+  transition: all 0.2s ease;
+}
+/* Hide elements in print/PDF */
+.no-print {
+  @media print {
+    display: none !important;
+  }
+}
+
+/* Print content specific styles */
+.print-content {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  color-adjust: exact;
+}
+
+.print-content * {
+  box-sizing: border-box;
+}
+
+/* Ensure proper rendering */
+#resume-preview-content {
+  transform: scale(1);
+  transform-origin: top left;
+}
+/* Force print content to render properly */
+#resume-preview-content {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: none;
+}
+
+#resume-preview-content * {
+  visibility: visible !important;
+  box-sizing: border-box;
+}
+/* Hide edit controls during PDF export */
+.pdf-export-mode [contenteditable="true"]:hover {
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: default !important;
+}
+
+.pdf-export-mode [contenteditable="true"]:focus {
+  outline: none !important;
+  background-color: transparent !important;
+  ring: none !important;
+}
+
+.pdf-export-mode button {
+  display: none !important;
+}
+
+.pdf-export-mode .group:hover button {
+  display: none !important;
+}
+
+.pdf-export-mode .no-print {
+  display: none !important;
+}
+
+/* Hide all interactive elements during export */
+.pdf-export-mode [contenteditable] {
+  cursor: default !important;
+  user-select: none !important;
+}
+
+.pdf-export-mode .opacity-0 {
+  display: none !important;
+}
+/* PDF Export Mode - Hide all edit controls */
+.pdf-export-mode button,
+.pdf-export-mode .no-print {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.pdf-export-mode [contenteditable="true"] {
+  cursor: default !important;
+  user-select: none !important;
+}
+
+.pdf-export-mode [contenteditable="true"]:hover,
+.pdf-export-mode [contenteditable="true"]:focus {
+  background-color: transparent !important;
+  outline: none !important;
+  ring: none !important;
+  box-shadow: none !important;
+}
+
+.pdf-export-mode .group:hover .opacity-0 {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+/* Ensure proper rendering during capture */
+.pdf-export-mode .resume-canvas-content {
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+/* ============================================
+   PRINT STYLES FOR PDF EXPORT
+   ============================================ */
+
+@media print {
+  /* Hide everything by default */
+  body * {
+    visibility: hidden;
+  }
+  
+  /* Show only resume content */
+  .resume-canvas-content,
+  .resume-canvas-content * {
+    visibility: visible !important;
+  }
+  
+  /* Position resume at top of page */
+  .resume-canvas-content {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 48px !important;
+    background: white !important;
+    margin: 0 !important;
+  }
+  
+  /* Hide all UI chrome */
+  header,
+  nav,
+  button,
+  .no-print,
+  .glass,
+  .glass-light,
+  .rounded-2xl,
+  .shadow-2xl,
+  .border-2,
+  .bg-gradient-to-b {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  /* Ensure colors print correctly */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  
+  /* Remove shadows and some decorations for print */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  /* Keep border radius and gradients */
+  .rounded-full,
+  .rounded-lg,
+  .rounded-xl {
+    border-radius: inherit !important;
+  }
+  
+  /* Page settings */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  
+  /* Prevent page breaks inside sections */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+  
+  ul, ol {
+    page-break-inside: avoid;
+  }
+  
+  /* Keep content together */
+  .resume-canvas-content > div {
+    page-break-inside: avoid;
+  }
+}
+
+/* ============================================
+   PDF EXPORT MODE (Hide edit controls)
+   ============================================ */
+
+.pdf-export-mode button,
+.pdf-export-mode .no-print {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.pdf-export-mode [contenteditable="true"] {
+  cursor: default !important;
+  user-select: none !important;
+}
+
+.pdf-export-mode [contenteditable="true"]:hover,
+.pdf-export-mode [contenteditable="true"]:focus {
+  background-color: transparent !important;
+  outline: none !important;
+  ring: none !important;
+  box-shadow: none !important;
+}
+
+.pdf-export-mode .group:hover .opacity-0 {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+.pdf-export-mode .opacity-0 {
+  display: none !important;
+}
+/* ============================================
+   PRINT STYLES FOR PDF EXPORT
+   ============================================ */
+
+@media print {
+  /* Reset everything */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  
+  /* Hide page chrome */
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Hide everything EXCEPT resume content */
+  body > * {
+    display: none !important;
+  }
+  
+  /* Show only the main app container */
+  #__next,
+  main {
+    display: block !important;
+  }
+  
+  /* Hide UI elements */
+  header,
+  nav,
+  button,
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Make sure resume preview container is visible */
+  .resume-canvas-content {
+    display: block !important;
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 210mm !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 48px !important;
+    background: white !important;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+  
+  /* Show all resume content */
+  .resume-canvas-content,
+  .resume-canvas-content * {
+    visibility: visible !important;
+    display: block !important;
+  }
+  
+  .resume-canvas-content span,
+  .resume-canvas-content p,
+  .resume-canvas-content li,
+  .resume-canvas-content h1,
+  .resume-canvas-content h2,
+  .resume-canvas-content h3,
+  .resume-canvas-content div[style*="flex"],
+  .resume-canvas-content div[style*="grid"] {
+    display: inherit !important;
+  }
+  
+  /* Page settings */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  
+  /* Remove decorative elements */
+  .rounded-2xl,
+  .shadow-2xl,
+  .border-2,
+  .absolute.inset-0 {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+    background: transparent !important;
+  }
+}
+
+/* PDF Export Mode - Hide edit controls */
+.pdf-export-mode button,
+.pdf-export-mode .no-print {
+  display: none !important;
+}
+
+.pdf-export-mode [contenteditable="true"]:hover,
+.pdf-export-mode [contenteditable="true"]:focus {
+  background-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-slate-700 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400 dark:bg-slate-600;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent;
+}
+
+/* Editable hover effects */
+[contenteditable="true"]:hover {
+  background-color: rgba(99, 102, 241, 0.05);
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+}
+
+[contenteditable="true"]:focus {
+  outline: none;
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+/* Smooth transitions for editable elements */
+[contenteditable="true"] {
+  transition: all 0.2s ease;
+}
+
+/* PDF Export Mode - Hide edit controls during capture */
+.pdf-export-mode button,
+.pdf-export-mode .no-print,
+.pdf-export-mode .opacity-0 {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.pdf-export-mode [contenteditable="true"]:hover,
+.pdf-export-mode [contenteditable="true"]:focus {
+  background-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.pdf-export-mode .group:hover button {
+  display: none !important;
+}
+
+.pdf-export-mode [contenteditable="true"] {
+  cursor: default !important;
 }
